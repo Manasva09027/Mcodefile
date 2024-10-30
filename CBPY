@@ -1,0 +1,162 @@
+import pyttsx3
+import speech_recognition as SR
+import datetime
+import os
+import wikipedia
+import time
+import subprocess
+import sys
+
+#Questions
+q1="who are you"
+q2="who made you"
+q3="what you can do"
+q4="tell me a joke"
+q5="ask me a quiz"
+q6="tell me about you"
+q7="what is your name"
+q8="hello"
+q9="how are you"
+q10="recomend me some songs"
+q11="yo"
+  
+  #Answers
+a1="I am a alex a python chatbot."
+a2="I was created by Manasva by coding."
+a3="I can solve any mathemetical problem or you can ask some questions to me according to my data."
+a4="\n Laptop- I cant remove this cap from me \n pc- because your CapsLock is on yo. \n \t hahaha....."
+a6="I am Alex, a python chatbot , am capable of solving mathametival problems and to answer some questions according to my data."
+a7="Hi my name is Alex , How can I help you. "
+a8="Hello user, nice to meet you ."
+a9="I am fine thank you user and how about you ."
+a10="\n Here you can try some of this:\n \n despasito \t\t by- louis fonsi \n levitating\t\t by- dua lipa \n no lie \t\t by- san paul & dua lipa \n dream on\t\t by- aerosmith \n way down we go\t\t by- kaleo \n unstopable\t\t by- sia \n world smallest violin\t\t by- AJR"
+a11="yo what's up buddy \n how can i assist you today."
+
+engine= pyttsx3.init('sapi5')
+voices= engine.getProperty('voices')
+engine.setProperty('voices' , voices[0].id)
+
+def speak(audio):
+    engine.say(audio)
+    engine.runAndWait()
+    
+    
+def cod():
+    r=SR.Recognizer()
+    with SR.Microphone() as source:
+        print('Listening.....')
+        speak('listning')
+        r.pause_threshold=1
+        r.adjust_for_ambient_noise(source , duration=1)
+        audio = r.listen(source)
+        
+    try:
+        print('Wait a moment please...')
+        query=r.recognize_google(audio , language='en-in')
+        print(f"you just said: {query} \n \t")
+        
+    
+    except Exception as e:
+        print(e)
+        speak ("Please tell me again ")
+        exit
+        query='none'
+    return query
+
+# query=cod().lower()
+
+def srt():
+    hor=int(datetime.datetime.now().hour)
+    if hor >=0 and hor <12:
+        print('Good Morning User.')
+        speak('Good Morning User.')
+        
+    elif hor >=12 and hor <16:
+        print('Good Afternoon User.')
+        speak('Good Afternoon User.')
+        
+    elif hor >=16 and hor <21:
+        print('Good Evening User.')
+        speak('Good Evening User.')
+        
+        
+    else:
+        print('Good Night User.')
+        speak('Good Night User.')
+        
+if __name__=="__main__":
+
+    srt()
+    query = cod().lower()
+    if 'time' in query:
+        strTime = datetime.datetime.now().strftime("%H:%M")
+        print(strTime)
+        speak(f"Time is {strTime}")
+        
+    elif 'open google chrome' in query:
+        speak("Opening Chrome..")
+        os.startfile("C:\Program Files (x86)\Google\Chrome\Application\chrome.exe")
+        
+    elif'wikipedia' in query :
+        speak('Searching in wikipedia.')
+        try:
+            queery=query.replace("wikipedia","")
+            results = wikipedia.summary(query,sentences=0.5)
+            print(results)
+            speak(results)
+        except:
+            speak("no resluts found , maybe an error")
+            print("no resluts found , maybe an error")        
+
+    if query==q1:
+        print(a1)
+        speak(a1)
+    elif query== q2:
+        print(a2)
+        speak(a2)
+    elif query== q3:
+        print(a3)
+        speak(a3)
+    elif query== q4:
+        print(a4)
+        speak(a4)
+    elif query=="hey":
+        print(a7)
+        speak(a7)
+    elif query=="yo":
+        print(a7)
+        speak(a7)
+    elif query=="hi":
+        print(a7)
+        speak(a7)
+    elif query== q6:
+        print(a6)
+        speak(a6)
+    elif query== q7:
+        print(a7)
+        speak(a7)
+    elif query== q8:
+        print(a8)
+        speak(a8)
+    elif query== q9:
+        print(a9)
+        speak(a9)
+    elif query== q10:
+        print(a10)
+        speak(a10)
+    elif query== q11:
+        print(a11)
+        speak(a11)
+    elif query=='stop':
+          speak('Stoping Program')
+          exit()
+# else:
+#     for i in search (w, tld="com", num=6, stop=6,):
+#         print("Here are some results by google: \n \t \t",i ,'\n')
+ 
+            
+        
+time.sleep(2)
+subprocess.call([sys.executable, os.path.realpath(__file__)]+sys.argv[1:])
+
+
